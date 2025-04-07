@@ -14,3 +14,4 @@ services:
       - ./nifi_data/content:/opt/nifi/content_repository
       - ./nifi_data/provenance:/opt/nifi/provenance_repository
       - ./logs:/opt/nifi/logs
+      - ./nifi_data/output:/data/logs

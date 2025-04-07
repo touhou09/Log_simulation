@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template>
+    <description>A simple template to simulate HTTP log generation using GenerateFlowFile</description>
+    <groupId>0e2d5489-0196-1000-4402-33b16a9b29ae</groupId>
+    <name>LogSimulationTemplate</name>
+    <snippet>
+        <processors>
+            <config>
+                <properties/>
+            </config>
+        </processors>
+    </snippet>
+    <timestamp>04/07/2025 02:59:14 UTC</timestamp>
+</template>
