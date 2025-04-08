@@ -13,5 +13,8 @@ class SimulatorBase(ABC):
     def generate_log(self, now: datetime) -> dict:
         pass
 
+    def generate_logs(self, now: datetime, count: int) -> list:
+        return [self.generate_log(now) for _ in range(count)]
+
     def render(self, data: dict) -> str:
         return self.template.render(**data)

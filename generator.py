@@ -1,24 +1,42 @@
 import asyncio
+import random
 from datetime import datetime, timedelta
 from simulator import get_all_simulators
 from queue_manager import log_queue
 
-def get_log_count_for_hour(hour):
-    if 0 <= hour < 8: return 290
-    elif 8 <= hour < 12: return 870
-    elif 12 <= hour < 14: return 1160
-    elif 14 <= hour < 19: return 1740
-    else: return 1740
+TIME_INTERVAL_CONFIG = {
+    (0, 7): (2.0, 4.0),
+    (8, 11): (1.0, 2.0),
+    (12, 13): (0.3, 0.8),
+    (14, 18): (1.0, 2.0),
+    (19, 23): (1.5, 3.0)
+}
+
+def get_interval_by_hour(hour):
+    for (start, end), (min_sec, max_sec) in TIME_INTERVAL_CONFIG.items():
+        if start <= hour <= end:
+            return random.uniform(min_sec, max_sec)
+    return 1.0
 
 async def start_log_generator(output_plugin):
     simulators = get_all_simulators()
-    now = datetime.utcnow().replace(hour=0, minute=0, second=0)
-    while now.hour < 24:
-        count = get_log_count_for_hour(now.hour)
-        for _ in range(count):
-            for service, simulator in simulators.items():
-                log = simulator.generate_log(now)
+    service_times = {
+        service: datetime.utcnow().replace(second=0, microsecond=0)
+        for service in simulators
+    }
+
+    while True:
+        for service, simulator in simulators.items():
+            now = service_times[service]
+            log_count = random.randint(1, 10)
+            logs = simulator.generate_logs(now, log_count)
+
+            for log in logs:
                 rendered = simulator.render(log)
                 await output_plugin.write(rendered, topic=f"logs.{service}")
-        await asyncio.sleep(1)
-        now += timedelta(seconds=1)
+
+            # ✅ 여러 로그 생성 후 한 번만 sleep (묶음 단위 지연)
+            batch_sleep = get_interval_by_hour(now.hour)
+            await asyncio.sleep(batch_sleep)
+
+            service_times[service] += timedelta(seconds=batch_sleep)
