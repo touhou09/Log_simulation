@@ -1,6 +1,9 @@
 from .base import SimulatorBase
 from datetime import datetime
+from faker import Faker
 import random
+
+faker = Faker()
 
 class PaymentSimulator(SimulatorBase):
     def __init__(self):
@@ -11,8 +14,8 @@ class PaymentSimulator(SimulatorBase):
             "timestamp": now.isoformat(),
             "service": "payment",
             "action": random.choice(["pay", "refund", "status"]),
-            "payment_id": random.randint(100000, 999999),
+            "payment_id": faker.uuid4(),
+            "ip": faker.ipv4(),
             "latency_ms": random.randint(15, 400),
-            "ip": f"172.16.0.{random.randint(1, 254)}",
             "status": 200
         }

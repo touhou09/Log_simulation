@@ -1,6 +1,9 @@
 from .base import SimulatorBase
 from datetime import datetime
+from faker import Faker
 import random
+
+faker = Faker()
 
 class MemberSimulator(SimulatorBase):
     def __init__(self):
@@ -11,8 +14,8 @@ class MemberSimulator(SimulatorBase):
             "timestamp": now.isoformat(),
             "service": "member",
             "action": random.choice(["register", "login", "logout"]),
-            "user_id": random.randint(1000, 9999),
+            "user_id": faker.uuid4(),
+            "ip": faker.ipv4(),
             "latency_ms": random.randint(10, 300),
-            "ip": f"192.168.0.{random.randint(1, 254)}",
             "status": 200
         }

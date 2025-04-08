@@ -1,4 +1,3 @@
-# log-simulator/main.py
 from fastapi import FastAPI
 from simulator.member import MemberSimulator
 from simulator.order import OrderSimulator

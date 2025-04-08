@@ -1,4 +1,3 @@
-
 import asyncio
 from datetime import datetime, timedelta
 from simulator import get_all_simulators
