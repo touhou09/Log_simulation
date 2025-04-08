@@ -1,0 +1,12 @@
+{
+    "topic": "logs.member",
+    "log": {
+      "timestamp": "{{ timestamp }}",
+      "service": "{{ service }}",
+      "action": "{{ action }}",
+      "user_id": "{{ user_id }}",
+      "ip": "{{ ip }}",
+      "latency_ms": {{ latency_ms }},
+      "status": {{ status }}
+    }
+  }

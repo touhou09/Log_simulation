@@ -1,1 +1,4 @@
-/nifi_data/output/
+*/__pycache__
+/__pycache__
+*.pid
+*.log
