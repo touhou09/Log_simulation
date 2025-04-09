@@ -174,7 +174,6 @@ uvicorn main:app --reload
 
 - `http://localhost:8000/stream` → 전체 로그
 - `http://localhost:8000/stream/member` → 특정 서비스 로그
-- `http://localhost:8000/docs` → Swagger UI
 
 ---
 
